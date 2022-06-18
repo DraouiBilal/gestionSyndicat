@@ -1,6 +1,8 @@
+import { connect } from "react-redux";
 
-const Navbar = () =>{
-    return(
+
+const Navbar = ({isAuthenticated,loading}) =>{
+    return(!loading && isAuthenticated && 
         <nav className="navbar navbar-expand-lg main-navbar">
         <div className="form-inline mr-auto">
           <ul className="navbar-nav mr-3">
@@ -174,4 +176,9 @@ const Navbar = () =>{
     )
 }
 
-export default Navbar;
+const mapStateToProps = state => ({
+  isAuthenticated: state.userReducer.isAuthenticated,
+  loading: state.userReducer.loading,
+})
+
+export default connect(mapStateToProps)(Navbar);
