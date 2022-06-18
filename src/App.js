@@ -52,7 +52,7 @@ function App() {
       <Router>
         <div className="main-wrapper main-wrapper-1">
           <div className="navbar-bg"></div>
-          <Alert/>
+          {/* <Alert/> */}
           <Navbar />
           <Sidebar />
           <Routes>

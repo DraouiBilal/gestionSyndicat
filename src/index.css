@@ -32,6 +32,18 @@
   z-index: 500;
 }
 
+.statistics-cards{
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-bottom: 35px;
+}
+
+.statistics-cards div{
+  width: 30%;
+}
+
+
 /*===================================================*/
 
 body{

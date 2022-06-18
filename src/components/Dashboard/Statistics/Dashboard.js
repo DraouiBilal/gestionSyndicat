@@ -28,7 +28,7 @@ const Dashboard = () => {
         text: title,
       },
     },
-  })
+  });
 
   const data = {
     labels,
@@ -47,19 +47,16 @@ const Dashboard = () => {
   };
 
   const pieData = {
-    labels: ['Nombre de locataire qui ont payer','Nombre de locataire qui n\'ont pas payer'],
+    labels: [
+      "Nombre de locataire qui ont payer",
+      "Nombre de locataire qui n'ont pas payer",
+    ],
     datasets: [
       {
-        label: '# of Votes',
-        data: [20,33],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(75, 192, 192, 1)',
-        ],
+        label: "# of Votes",
+        data: [20, 33],
+        backgroundColor: ["rgba(255, 99, 132, 0.2)", "rgba(75, 192, 192, 0.2)"],
+        borderColor: ["rgba(255, 99, 132, 1)", "rgba(75, 192, 192, 1)"],
         borderWidth: 1,
       },
     ],
@@ -73,25 +70,53 @@ const Dashboard = () => {
             <p className="stats-header">Statistics</p>
           </div>
           <div className="card-body">
-          <div class="stati bg-emerald ">
-          <i class="icon-notebook icons"></i>
-          <div>
-            <b>6</b>
-            <span>bg-emerald</span>
-          </div> 
-        </div>
+            <div className="statistics-cards">
+              <div class="stati bg-emerald ">
+                <i class="icon-notebook icons"></i>
+                <div>
+                  <b>6</b>
+                  <span>Nombre de locataire</span>
+                </div>
+              </div>
+              <div class="stati bg-turquoise ">
+                <i class="icon-notebook icons"></i>
+                <div>
+                  <b>6</b>
+                  <span>Total depense</span>
+                </div>
+              </div>
+              <div class="stati bg-peter_river ">
+                <i class="icon-notebook icons"></i>
+                <div>
+                  <b>6</b>
+                  <span>bg-emerald</span>
+                </div>
+              </div>
+            </div>
             <div className="statistics">
               <div className="pie-chart">
-                <PieChart options={getOptions("état de locataires")} data={pieData} />
+                <PieChart
+                  options={getOptions("état de locataires")}
+                  data={pieData}
+                />
               </div>
               <div className="pie-chart">
-                <PieChart options={getOptions("Profit par mois")} data={pieData} />
+                <PieChart
+                  options={getOptions("Profit par mois")}
+                  data={pieData}
+                />
               </div>
               <div className="chart">
-                <VerticalBarChart options={getOptions("Depenses par mois")} data={data} />
+                <VerticalBarChart
+                  options={getOptions("Depenses par mois")}
+                  data={data}
+                />
               </div>
               <div className="chart">
-                <VerticalBarChart options={getOptions("Profit par mois")} data={data} />
+                <VerticalBarChart
+                  options={getOptions("Profit par mois")}
+                  data={data}
+                />
               </div>
             </div>
           </div>
