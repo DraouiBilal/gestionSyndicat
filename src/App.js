@@ -50,9 +50,11 @@ function App() {
   return (
     <Provider store={store}>
       <Router>
+        <div className="alert-container">
+          <Alert/>
+        </div>
         <div className="main-wrapper main-wrapper-1">
           <div className="navbar-bg"></div>
-          {/* <Alert/> */}
           <Navbar />
           <Sidebar />
           <Routes>

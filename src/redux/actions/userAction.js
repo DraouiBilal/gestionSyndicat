@@ -20,7 +20,6 @@ export const loadUser = () => async (dispatch) => {
   try {
     setAuthToken(localStorage.getItem("access_token"));
     const res = await axios.get("/profile");
-    console.log(localStorage.getItem("access_token"));
     const users = await axios.get("/users");
     dispatch({
       type: USER_LOADED,
@@ -51,8 +50,8 @@ export const signup = (body) => async (dispatch) => {
     dispatch({
       type: REGISTER_SUCCESS,
     });
-    dispatch(setAlert("User added succesfully", "success"));
     dispatch(loadUser());
+    dispatch(setAlert("Registered succesfully", "success"));
   } catch (err) {
     console.log(err.response);
     dispatch({
@@ -76,6 +75,7 @@ export const login = (email, password) => async (dispatch) => {
       payload: res.data,
     });
     dispatch(loadUser());
+    dispatch(setAlert("Successfully logged in","success"))
   } catch (err) {
     const errors = err.response.data.errors;
     console.log(err.response);
@@ -107,6 +107,7 @@ export const update = (formData) => async (dispatch) => {
       payload: res.data,
     });
     dispatch(loadUser());
+    dispatch(setAlert("Successfully Updated the profile","success"))
   } catch (err) {
     console.log(err.response);
 
@@ -138,6 +139,7 @@ export const registerProprietaire = (userData) => async (dispatch) => {
       payload: res.data,
     });
     dispatch(loadUser());
+    dispatch(setAlert("Successfully added new user","success"))
   } catch(err){
 
   }
@@ -145,10 +147,10 @@ export const registerProprietaire = (userData) => async (dispatch) => {
 
 // Logout
 export const logout = () => async (dispatch) => {
-  console.log("logout");
   try {
     await axios.put("/logout");
     dispatch({ type: LOGOUT });
+    dispatch(setAlert("Successfully logged out","success"))
   } catch (err) {
     console.log(err.response);
     dispatch({

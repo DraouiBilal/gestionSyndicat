@@ -12073,3 +12073,17 @@ textarea.form-control {
   background: #000;
   color: #fff
 }
+
+.login-reroute{
+  margin-top: 20px;
+  text-align: center;
+}
+
+.login-reroute a{
+  color: blue;
+}
+
+.login-reroute a:hover{
+  color: blue;
+  text-decoration: underline !important;
+}

@@ -27,11 +27,6 @@
   width: 60%;
 }
 
-.alert-position{
-  position: fixed;
-  z-index: 500;
-}
-
 .statistics-cards{
   display: flex;
   justify-content: space-around;

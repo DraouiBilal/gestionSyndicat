@@ -1,9 +1,16 @@
 import { useRef } from "react";
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { registerProprietaire, update } from "../../../redux/actions/userAction";
+import {
+  registerProprietaire,
+  update,
+} from "../../../redux/actions/userAction";
 
-const Profile = ({ auth: { isAuthenticated, user, loading }, update,registerProprietaire }) => {
+const Profile = ({
+  auth: { isAuthenticated, user, loading },
+  update,
+  registerProprietaire,
+}) => {
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -18,8 +25,8 @@ const Profile = ({ auth: { isAuthenticated, user, loading }, update,registerProp
     full_name: "",
     phone: "",
     email: "",
-    cin: ""
-  })
+    cin: "",
+  });
 
   const propriete = useRef();
 
@@ -57,6 +64,12 @@ const Profile = ({ auth: { isAuthenticated, user, loading }, update,registerProp
   const handleUsersDataOnSubmit = (e) => {
     e.preventDefault();
     registerProprietaire(usersData);
+    setUsersData({
+      full_name: "",
+      phone: "",
+      email: "",
+      cin: "",
+    });
   };
 
   return (
@@ -244,7 +257,7 @@ const Profile = ({ auth: { isAuthenticated, user, loading }, update,registerProp
                       id="about"
                       role="tabpanel"
                       aria-labelledby="home-tab2"
-                      onSubmit={(e)=>handleUsersDataOnSubmit(e)}
+                      onSubmit={(e) => handleUsersDataOnSubmit(e)}
                     >
                       <div className="row">
                         <div className="col-md-3 col-6 b-r">
@@ -341,4 +354,6 @@ const mapStateToProps = (state) => ({
   auth: state.userReducer,
 });
 
-export default connect(mapStateToProps, { update,registerProprietaire })(Profile);
+export default connect(mapStateToProps, { update, registerProprietaire })(
+  Profile
+);

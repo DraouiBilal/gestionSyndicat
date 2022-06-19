@@ -1,14 +1,25 @@
 import { SET_ALERT, REMOVE_ALERT } from '../types';
 
-const initialState = [];
+const initialState = {
+  status:false,
+  type:"",
+  title:""
+}
 
 function alertReducer(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case SET_ALERT:
-      return [...state, payload];
+      return {
+          ...state,
+          status:true,
+          type:payload.type,
+          title:payload.title
+      }
     case REMOVE_ALERT:
-      return state.filter((alert) => alert.id !== payload);
+      return{
+          ...initialState
+      }
     default:
       return state;
   }

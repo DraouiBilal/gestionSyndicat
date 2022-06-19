@@ -1,16 +1,21 @@
 import { connect } from 'react-redux';
 import {useEffect} from "react";
 import ReactJsAlert from "reactjs-alert"
+import { useState } from 'react';
+import { removeAlert } from '../../../redux/actions/alertAction';
 
-const Alert = ({ alerts }) =>{
-    
+const Alert = ({ alert }) =>{
+
+
+ 
+
     return (
     <div className='alert-position'>
         <ReactJsAlert
-            status={true}   // true or false
-            type="info"   // success, warning, error, info
-            title="Hey! this is an alert."   // title you want to display
-            Close={() => this.setState({ status: false })}   // callback method for hide
+            status={alert.status}   // true or false
+            type={alert.type}   // success, warning, error, info
+            title={alert.title}  // title you want to display
+            Close={()=> removeAlert()}
         />
     </div>
     )
@@ -18,7 +23,7 @@ const Alert = ({ alerts }) =>{
 
 
 const mapStateToProps = (state) => ({
-  alerts: state.alert
+  alert: state.alertReducer
 });
 
 export default connect(mapStateToProps)(Alert);

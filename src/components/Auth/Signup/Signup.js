@@ -1,7 +1,7 @@
 import "./css/main.css";
 import background from "./images/bg.jpg";
 import { connect } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signup } from "../../../redux/actions/userAction";
 import { useState } from "react";
 import { setAlert } from "../../../redux/actions/alertAction";
@@ -189,8 +189,8 @@ const Signup = ({ auth: { isAuthenticated, loading },signup,setAlert }) => {
                   </p>
                 </div>
                 <div className="w-100 text-center">
-                  <p className="mt-4">
-                    I'm already a member! <a href="#signin">Sign In</a>
+                  <p className="mt-4 login-reroute">
+                    Vous avez déja un compte? <Link to="/login">Sign In</Link>
                   </p>
                 </div>
               </div>

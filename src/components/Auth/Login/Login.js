@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../../../redux/actions/userAction'
 import { connect } from 'react-redux'
 import './css/main.css';
@@ -79,6 +79,8 @@ const Login = ({login,isAuthenticated}) =>{
                                 </button>
                             </div>
                         </form>
+
+                        <p className='register-reroute'>Vous n'avez un compte? <Link to={"/signup"}>Créez un compte</Link></p>
                     </div>
                 </div>
             </div>
