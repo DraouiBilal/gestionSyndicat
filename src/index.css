@@ -40,10 +40,19 @@
 }
 
 .statistics-cards div{
-  width: 30%;
+  width: 300px;
 }
 
+@media screen and (min-width<400px) {
+  .statistics-cards div{
+    width: 90% !important;
+  }
+}
 
+.statistics-cards div svg{
+  margin-top: 10px;
+  font-size: 40px;
+}
 /*===================================================*/
 
 body{

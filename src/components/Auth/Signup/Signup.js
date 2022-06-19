@@ -10,6 +10,9 @@ const Signup = ({ auth: { isAuthenticated, loading },signup,setAlert }) => {
 
   const navigate = useNavigate();
 
+  if(isAuthenticated)
+      navigate('/')
+
   const [formData, setFormData] = useState({
     last_name: "",
     first_name: "",
@@ -29,7 +32,6 @@ const Signup = ({ auth: { isAuthenticated, loading },signup,setAlert }) => {
     if(formData.password === formData.confirmPassword)
       signup(formData);
     else{
-      console.log("test");
       setAlert("test","success")
     }
   };
