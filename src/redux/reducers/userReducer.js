@@ -7,7 +7,8 @@ import {
     REGISTER_FAIL,
     LOGOUT,
     USER_ERROR,
-    UPDATE_USER
+    UPDATE_USER,
+    ADD_PROPRIETAIRE
 } from '../types'
   
 const initialState = {
@@ -43,6 +44,15 @@ function userReducer(state = initialState, action) {
         ...state,
         ...payload,
       }
+
+    case ADD_PROPRIETAIRE:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          users: [...state.user.users, payload.user]
+        }
+      }  
 
     case AUTH_ERROR:
     case LOGIN_FAIL:

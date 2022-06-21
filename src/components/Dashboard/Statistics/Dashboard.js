@@ -1,3 +1,9 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  solid,
+  regular,
+  brands,
+} from "@fortawesome/fontawesome-svg-core/import.macro";
 import PieChart from "./PieChart";
 import VerticalBarChart from "./VerticalBarChart";
 
@@ -71,22 +77,22 @@ const Dashboard = () => {
           </div>
           <div className="card-body">
             <div className="statistics-cards">
-              <div class="stati bg-emerald ">
-                <i class="icon-notebook icons"></i>
+              <div className="stati bg-emerald ">
+                <FontAwesomeIcon icon={solid("sack-dollar")} />
                 <div>
                   <b>6</b>
                   <span>Nombre de locataire</span>
                 </div>
               </div>
-              <div class="stati bg-turquoise ">
-                <i class="icon-notebook icons"></i>
+              <div className="stati bg-turquoise ">
+                <FontAwesomeIcon icon={solid("sack-dollar")} />
                 <div>
                   <b>6</b>
                   <span>Total depense</span>
                 </div>
               </div>
-              <div class="stati bg-peter_river ">
-                <i class="icon-notebook icons"></i>
+              <div className="stati bg-peter_river ">
+                <FontAwesomeIcon icon={solid("sack-dollar")} />
                 <div>
                   <b>6</b>
                   <span>bg-emerald</span>

@@ -483,3 +483,17 @@ iframe {
         padding-right: 15px
     }
 }
+
+.register-reroute{
+    margin-top: 20px;
+    text-align: center;
+}
+
+.register-reroute a{
+    color: blue;
+}
+
+.register-reroute a:hover{
+    color: blue;
+    text-decoration: underline !important;
+}

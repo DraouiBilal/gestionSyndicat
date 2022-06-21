@@ -21,14 +21,16 @@ import Footer from "./components/layouts/Footer/Footer";
 //utils
 import useScript from "./utils/useScript";
 import Alert from "./components/layouts/Alert/Alert";
+import Annonces from "./components/Annonces/Annonces";
+import Annonce from "./components/Annonces/Annonce";
 
 function App() {
   useEffect(() => {
     // check for token in LS
     if (localStorage.getItem("access_token")) {
       setAuthToken(localStorage.getItem("access_token"));
+      store.dispatch(loadUser());  
     }
-    store.dispatch(loadUser());
 
     // log user out from all tabs if they log out in one tab
     window.addEventListener("storage", () => {
@@ -50,9 +52,11 @@ function App() {
   return (
     <Provider store={store}>
       <Router>
+        <div className="alert-container">
+          <Alert/>
+        </div>
         <div className="main-wrapper main-wrapper-1">
           <div className="navbar-bg"></div>
-          {/* <Alert/> */}
           <Navbar />
           <Sidebar />
           <Routes>
@@ -60,6 +64,8 @@ function App() {
             <Route exact path="/signup" element={<Signup />} /> 
             <Route exact path="/" element={<Dashboard />} /> 
             <Route exact path="/profile" element={<Profile />} />
+            <Route exact path="/annonces" element={<Annonces />} />
+            <Route exact path="/annonces/:id" element={<Annonce />} />
           </Routes>
           <Footer />
         </div>
