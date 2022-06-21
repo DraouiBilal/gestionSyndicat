@@ -155,13 +155,91 @@ box-shadow:0px 0.4em 0.5em rgb(0, 0, 0,0.8);
 .stati.silver { color: rgb(189, 195, 199); } 
 .stati.asbestos { color: rgb(127, 140, 141); } 
   
-   
+.annonces{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.annonce-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #1F2124;
+  width: 30%;
+  height:350px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  box-shadow: rgba(13, 13, 22, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  padding: 30px 15px 0 15px;
+}
+.annonce-card:hover {
+  background-color: #191b1d;
+  padding-top: 30px;
+  width: 32%;
+  height:360px;
+  border-radius: 15px;
+  transition: 0.3s;
+  box-shadow: rgb(18, 25, 32) 0px 20px 30px -10px;
+}
 
 
+.annonce-card svg{
+  font-size: 50px;
+  color: #c9a326;
+}
+
+.annonce-card h2{
+  text-align: center;
+  color: rgb(198, 202, 206);
+}
+
+.annonce-card h6{
+  text-align: center;
+  color: rgb(198, 202, 206);
+}
+
+.annonce-card p{
+  text-align: center;
+  color: aliceblue;
+  transition: 0.3s;
+
+}
+
+.annonce-card a{
+    font-weight: 800;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    color: aliceblue;
+    background-color: #c9a326;
+    width: 120px;
+    height: 40px;
+    padding-top: 9px;
+    margin-bottom: 10px;
+}
+
+.annonce-card a:hover{
+  background-color: #a3800e;
+}
 
 
+.annonce-content p{
+  color: aliceblue !important;
+}
+
+.annonce-date{
+  text-align: end;
+  margin-right: 40px;
+}
 
 
+.annonce-content br{
+  border: solid 8px black;
+  width: 60px !important;
+}
 
 
 

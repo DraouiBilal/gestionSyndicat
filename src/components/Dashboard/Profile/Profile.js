@@ -233,116 +233,122 @@ const Profile = ({
                 </div>
               </div>
             </div>
-            <div className="col col-md col-lg">
-              <div className="card">
-                <div className="padding-20">
-                  <ul className="nav nav-tabs" id="myTab2" role="tablist">
-                    <li className="nav-item">
-                      <span
-                        className="nav-link active"
-                        id="home-tab2"
-                        data-toggle="tab"
-                        href="#about"
-                        role="tab"
-                        aria-selected="true"
-                        ref={propriete}
+            { user.role==="syndicate" &&
+              <div className="col col-md col-lg">
+                <div className="card">
+                  <div className="padding-20">
+                    <ul className="nav nav-tabs" id="myTab2" role="tablist">
+                      <li className="nav-item">
+                        <span
+                          className="nav-link active"
+                          id="home-tab2"
+                          data-toggle="tab"
+                          href="#about"
+                          role="tab"
+                          aria-selected="true"
+                          ref={propriete}
+                        >
+                          Les proprietaires
+                        </span>
+                      </li>
+                    </ul>
+                    <div className="tab-content tab-bordered" id="myTab3Content">
+                      <form
+                        className="tab-pane fade show active"
+                        id="about"
+                        role="tabpanel"
+                        aria-labelledby="home-tab2"
+                        onSubmit={(e) => handleUsersDataOnSubmit(e)}
                       >
-                        Les proprietaires
-                      </span>
-                    </li>
-                  </ul>
-                  <div className="tab-content tab-bordered" id="myTab3Content">
-                    <form
-                      className="tab-pane fade show active"
-                      id="about"
-                      role="tabpanel"
-                      aria-labelledby="home-tab2"
-                      onSubmit={(e) => handleUsersDataOnSubmit(e)}
-                    >
-                      <div className="row">
-                        <div className="col-md-3 col-6 b-r">
-                          <strong>Full Name</strong>
-                          <br />
-                          {user.users.map((user) => (
-                            <p className="text-muted">
-                              {user.last_name + " " + user.first_name}
-                            </p>
-                          ))}
-                          <input
-                            type="text"
-                            onChange={(e) => {
-                              handleUsersDataOnChange(e);
-                            }}
-                            name="full_name"
-                            className="form-control"
-                            value={usersData.full_name}
-                          />
+                        <div className="row">
+                          <div className="col-md-3 col-6 b-r">
+                            <strong>Full Name</strong>
+                            <br />
+                            {user.users.map((user) => (
+                              <p className="text-muted">
+                                {user.last_name + " " + user.first_name}
+                              </p>
+                            ))}
+                            <input
+                              type="text"
+                              onChange={(e) => {
+                                handleUsersDataOnChange(e);
+                              }}
+                              name="full_name"
+                              placeholder="Full Name"
+                              className="form-control"
+                              value={usersData.full_name}
+                            />
+                          </div>
+                          <div className="col-md-3 col-6 b-r">
+                            <strong>Mobile</strong>
+                            <br />
+                            {user.users.map((user) => (
+                              <p className="text-muted">{user.phone}</p>
+                            ))}{" "}
+                            <input
+                              type="text"
+                              onChange={(e) => {
+                                handleUsersDataOnChange(e);
+                              }}
+                              name="phone"
+                              placeholder="Phone Number"
+                              className="form-control"
+                              value={usersData.phone}
+                            />
+                          </div>
+                          <div className="col-md-3 col-6 b-r">
+                            <strong>Email</strong>
+                            <br />
+                            {user.users.map((user) => (
+                              <p className="text-muted">{user.email}</p>
+                            ))}{" "}
+                            <input
+                              type="text"
+                              onChange={(e) => {
+                                handleUsersDataOnChange(e);
+                              }}
+                              name="email"
+                              placeholder="Email"
+                              className="form-control"
+                              value={usersData.email}
+                            />
+                          </div>
+                          <div className="col-md-3 col-6">
+                            <strong>CIN</strong>
+                            <br />
+                            {user.users.map((user) => (
+                              <p className="text-muted">{user.cin}</p>
+                            ))}{" "}
+                            <input
+                              type="text"
+                              onChange={(e) => {
+                                handleUsersDataOnChange(e);
+                              }}
+                              name="cin"
+                              placeholder="CIN"
+                              className="form-control"
+                              value={usersData.cin}
+                            />
+                          </div>
                         </div>
-                        <div className="col-md-3 col-6 b-r">
-                          <strong>Mobile</strong>
-                          <br />
-                          {user.users.map((user) => (
-                            <p className="text-muted">{user.phone}</p>
-                          ))}{" "}
-                          <input
-                            type="text"
-                            onChange={(e) => {
-                              handleUsersDataOnChange(e);
-                            }}
-                            name="phone"
-                            className="form-control"
-                            value={usersData.phone}
-                          />
+                        <div className="card-footer text-right">
+                          <button type="submit" className="btn btn-primary">
+                            Save Changes
+                          </button>
                         </div>
-                        <div className="col-md-3 col-6 b-r">
-                          <strong>Email</strong>
-                          <br />
-                          {user.users.map((user) => (
-                            <p className="text-muted">{user.email}</p>
-                          ))}{" "}
-                          <input
-                            type="text"
-                            onChange={(e) => {
-                              handleUsersDataOnChange(e);
-                            }}
-                            name="email"
-                            className="form-control"
-                            value={usersData.email}
-                          />
-                        </div>
-                        <div className="col-md-3 col-6">
-                          <strong>CIN</strong>
-                          <br />
-                          {user.users.map((user) => (
-                            <p className="text-muted">{user.cin}</p>
-                          ))}{" "}
-                          <input
-                            type="text"
-                            onChange={(e) => {
-                              handleUsersDataOnChange(e);
-                            }}
-                            name="cin"
-                            className="form-control"
-                            value={usersData.cin}
-                          />
-                        </div>
-                      </div>
-                      <div className="card-footer text-right">
-                        <button type="submit" className="btn btn-primary">
-                          Save Changes
-                        </button>
-                      </div>
-                    </form>
-                    <div
-                      className="tab-pane fade"
-                      id="settings"
-                      role="tabpanel"
-                      aria-labelledby="profile-tab2"
-                    ></div>
+                      </form>
+                      <div
+                        className="tab-pane fade"
+                        id="settings"
+                        role="tabpanel"
+                        aria-labelledby="profile-tab2"
+                      ></div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            }
           </div>
         </section>
       </div>
