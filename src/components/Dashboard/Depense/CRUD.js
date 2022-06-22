@@ -221,7 +221,7 @@ export default function CRUD() {
     //table columns structure
     const columns = [
         { field: 'id', headerName: 'ID', width: 70 },
-        { field: 'numero_operation', headerName: 'Numero d\'operation', width: 180 },
+        { field: 'id_propriete', headerName: 'id propriete', width: 180 },
         { field: 'date_operation', headerName: 'Date d\'oprartion', width: 220 },
         {
             field: 'intitule',
@@ -239,7 +239,7 @@ export default function CRUD() {
           width: 100,
           type: 'actions',
           getActions: (params)=>[
-            <GridActionsCellItem icon={<DeleteIcon sx={{color:"red",fontSize:"20px"}}/>} onClick={()=>{handleDelete(params.row.numero_operation);}} />,
+            <GridActionsCellItem icon={<DeleteIcon sx={{color:"red",fontSize:"20px"}}/>} onClick={()=>{handleDelete(params.row.id_propriete);}} />,
             <GridActionsCellItem icon={<EditIcon sx={{color:"yellow",fontSize:"20px"}}/>} onClick={()=>{handleOpenEdit(params.row)}} />
             ]
         },
@@ -248,8 +248,8 @@ export default function CRUD() {
 
     // the way rows should look like after getting them with a useEffect i guess
     const rows = [
-      { id: 1, numero_operation: '9798798', date_operation: '20-11-2000', montant: 35, intitule:'Intitu'},
-      { id: 2, numero_operation: '7897984', date_operation: '21-11-2000', montant: 35, intitule:'Intitu'},
+      { id: 1, id_propriete: '9798798', date_operation: '20-11-2000', montant: 35, intitule:'Intitu'},
+      { id: 2, id_propriete: '7897984', date_operation: '21-11-2000', montant: 35, intitule:'Intitu'},
     ];
 
     const handleDelete = (numero) =>{

@@ -34,7 +34,10 @@ const Sidebar = ({logout, isAuthenticated,loading}) =>{
               <Link to={"/profile"} className="nav-link"><i className="fas fa-map-signs"></i><span>Profile</span></Link>
             </li>
             <li className="dropdown">
-              <Link to={"/proprietaires"} className="nav-link"><i className="fas fa-broom"></i><span>Propriétaires</span></Link>
+              <Link to={"/proprietes"} className="nav-link"><i className="fas fa-broom"></i><span>Propriétes</span></Link>
+            </li>
+            <li className="dropdown">
+              <Link to={"/paiement"} className="nav-link"><i className="fas fa-broom"></i><span>Paiement</span></Link>
             </li>
             <li className="dropdown">
               <Link to={"/depenses"} className="nav-link"><i className="fab fa-accusoft"></i><span>Dépenses</span></Link>

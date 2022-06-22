@@ -7,6 +7,7 @@ import setAuthToken from "./utils/setAuthToken";
 import Login from "./components/Auth/Login/Login";
 import Signup from "./components/Auth/Signup/Signup";
 import Profile from "./components/Dashboard/Profile/Profile";
+import Depense from './components/Dashboard/Depense/Depense'
 
 //redux
 import { Provider } from "react-redux";
@@ -66,6 +67,7 @@ function App() {
             <Route exact path="/profile" element={<Profile />} />
             <Route exact path="/annonces" element={<Annonces />} />
             <Route exact path="/annonces/:id" element={<Annonce />} />
+            <Route exact path="/depenses" element={<Depense />} />
           </Routes>
           <Footer />
         </div>
