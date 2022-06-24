@@ -85,11 +85,6 @@ const Profile = ({
                 <div className="card author-box">
                   <div className="card-body">
                     <div className="author-box-center">
-                      <img
-                        alt="image"
-                        src="assets/img/users/user-1.png"
-                        className="rounded-circle author-box-picture"
-                      />
                       <div className="clearfix"></div>
                       <div className="author-box-name">
                         <a href="#">{`${user.last_name} ${user.first_name}`}</a>

@@ -16,17 +16,18 @@ import {
 
 // Load User
 export const loadUser = () => async (dispatch) => {
-  console.log("load");
+  let users=null
   try {
     setAuthToken(localStorage.getItem("access_token"));
     const res = await axios.get("/profile");
-    const users = await axios.get("/users");
+    if(res.data.user.role==='syndicate')
+      users = await axios.get("/users");
     dispatch({
       type: USER_LOADED,
       payload: {
         user: {
           ...res.data.user,
-          users: users.data.users,
+          users: users && users.data.users,
         },
       },
     });
@@ -46,7 +47,8 @@ export const signup = (body) => async (dispatch) => {
     },
   };
   try {
-    await axios.post("/register", body, config);
+    const res = await axios.post("/register", body, config);
+    await axios.patch('/confirm-email',{email:body.email,verification_code:res.data.verification_code},config)
     dispatch({
       type: REGISTER_SUCCESS,
     });
@@ -77,8 +79,8 @@ export const login = (email, password) => async (dispatch) => {
     dispatch(loadUser());
     dispatch(setAlert("Successfully logged in","success"))
   } catch (err) {
+    console.log(err);
     const errors = err.response.data.errors;
-    console.log(err.response);
 
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
@@ -134,6 +136,17 @@ export const registerProprietaire = (userData) => async (dispatch) => {
 
   try{
     const res = await axios.post("/register-new-user", body, config);
+    await axios.patch('/confirm-email',{email:body.email,verification_code:res.data.verification_code},config)
+    
+    const code = await axios.post("/reset-password", {email:body.email}, config);
+    console.log(code);
+    await axios.put("/reset-password",{
+      "email":body.email,
+      "code":code.data.password,
+      "password":"Abc@1234",
+      "password_confirmation":"Abc@1234"
+    },config)
+
     dispatch({
       type: ADD_PROPRIETAIRE,
       payload: res.data,
@@ -141,7 +154,7 @@ export const registerProprietaire = (userData) => async (dispatch) => {
     dispatch(loadUser());
     dispatch(setAlert("Successfully added new user","success"))
   } catch(err){
-
+    console.log(err);
   }
 };
 

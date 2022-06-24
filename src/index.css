@@ -241,7 +241,17 @@ box-shadow:0px 0.4em 0.5em rgb(0, 0, 0,0.8);
   width: 60px !important;
 }
 
+.register-reroute{
+  margin-top: 20px;
+}
 
+.register-reroute a{
+  color: blue !important;
+}
+
+.register-reroute a:hover{
+  text-decoration: underline !important;
+}
 
 
 

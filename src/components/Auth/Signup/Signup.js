@@ -32,7 +32,7 @@ const Signup = ({ auth: { isAuthenticated, loading },signup,setAlert }) => {
     if(formData.password === formData.confirmPassword)
       signup(formData);
     else{
-      setAlert("test","success")
+      setAlert("Passwords do not match","error")
     }
   };
 
@@ -189,7 +189,7 @@ const Signup = ({ auth: { isAuthenticated, loading },signup,setAlert }) => {
                   </p>
                 </div>
                 <div className="w-100 text-center">
-                  <p className="mt-4 login-reroute">
+                  <p className="mt-4 register-reroute">
                     Vous avez déja un compte? <Link to="/login">Sign In</Link>
                   </p>
                 </div>
