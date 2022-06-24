@@ -24,6 +24,8 @@ import useScript from "./utils/useScript";
 import Alert from "./components/layouts/Alert/Alert";
 import Annonces from "./components/Annonces/Annonces";
 import Annonce from "./components/Annonces/Annonce";
+import Proprietes from "./components/Dashboard/Proprietes/Proprietes";
+import Paiement from "./components/Dashboard/Paiement/Paiement";
 
 function App() {
   useEffect(() => {
@@ -68,6 +70,8 @@ function App() {
             <Route exact path="/annonces" element={<Annonces />} />
             <Route exact path="/annonces/:id" element={<Annonce />} />
             <Route exact path="/depenses" element={<Depense />} />
+            <Route exact path="/paiement" element={<Paiement />} />
+            <Route exact path="/proprietes" element={<Proprietes />} />
           </Routes>
           <Footer />
         </div>

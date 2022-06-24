@@ -1,13 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  solid,
-  regular,
-  brands,
-} from "@fortawesome/fontawesome-svg-core/import.macro";
+import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import PieChart from "./PieChart";
 import VerticalBarChart from "./VerticalBarChart";
+import { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import axios from "axios";
 
-const Dashboard = () => {
+const Dashboard = ({auth:{user,loading}}) => {
   const labels = [
     "Jan",
     "Fev",
@@ -36,18 +35,43 @@ const Dashboard = () => {
     },
   });
 
-  const data = {
+  useEffect(() => {
+    axios.get('/statistics').then(res=>{
+      setStatistics({...res.data,loading:false})
+    }).catch(err=>{
+      console.log(err);
+    })
+  }, [user]);
+
+  const [statistics, setStatistics] = useState({
+    nombre_locataires: 0,
+    annee_profits: [],
+    mois_profits: 0,
+    annee_depenses: [],
+    mois_depenses: 0,
+    paid_count: 0,
+    not_paid_count: 0,
+    loading:true
+  });
+
+  const dataProfit = {
     labels,
     datasets: [
       {
-        label: "Dataset 1",
-        data: labels.map(() => Math.floor(Math.random() * 1000 + 1)),
+        label: "Profit",
+        data: statistics.annee_profits,
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
+    ],
+  };
+
+  const dataDepense = {
+    labels,
+    datasets: [
       {
-        label: "Dataset 2",
-        data: labels.map(() => Math.floor(Math.random() * 1000 + 1)),
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
+        label: "Profit",
+        data: statistics.annee_depenses,
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
     ],
   };
@@ -60,7 +84,7 @@ const Dashboard = () => {
     datasets: [
       {
         label: "# of Votes",
-        data: [20, 33],
+        data: [statistics.paid_count, statistics.not_paid_count],
         backgroundColor: ["rgba(255, 99, 132, 0.2)", "rgba(75, 192, 192, 0.2)"],
         borderColor: ["rgba(255, 99, 132, 1)", "rgba(75, 192, 192, 1)"],
         borderWidth: 1,
@@ -68,7 +92,7 @@ const Dashboard = () => {
     ],
   };
 
-  return (
+  return (!loading && !statistics.loading &&
     <div className="main-content">
       <div className="col col-md col-lg">
         <div className="card">
@@ -80,22 +104,22 @@ const Dashboard = () => {
               <div className="stati bg-emerald ">
                 <FontAwesomeIcon icon={solid("sack-dollar")} />
                 <div>
-                  <b>6</b>
-                  <span>Nombre de locataire</span>
+                  <b>{statistics.mois_profits}DH</b>
+                  <span>profit de ce mois</span>
                 </div>
               </div>
               <div className="stati bg-turquoise ">
-                <FontAwesomeIcon icon={solid("sack-dollar")} />
+                <FontAwesomeIcon icon={solid("house-chimney")} />
                 <div>
-                  <b>6</b>
-                  <span>Total depense</span>
+                  <b>{statistics.nombre_locataires}</b>
+                  <span>Nombre de locataire</span>
                 </div>
               </div>
               <div className="stati bg-peter_river ">
-                <FontAwesomeIcon icon={solid("sack-dollar")} />
+                <FontAwesomeIcon icon={solid("hand-holding-dollar")} />
                 <div>
-                  <b>6</b>
-                  <span>bg-emerald</span>
+                  <b>{statistics.mois_depenses}DH</b>
+                  <span>Total depense</span>
                 </div>
               </div>
             </div>
@@ -106,22 +130,16 @@ const Dashboard = () => {
                   data={pieData}
                 />
               </div>
-              <div className="pie-chart">
-                <PieChart
-                  options={getOptions("Profit par mois")}
-                  data={pieData}
-                />
-              </div>
               <div className="chart">
                 <VerticalBarChart
                   options={getOptions("Depenses par mois")}
-                  data={data}
+                  data={dataDepense}
                 />
               </div>
               <div className="chart">
                 <VerticalBarChart
                   options={getOptions("Profit par mois")}
-                  data={data}
+                  data={dataProfit}
                 />
               </div>
             </div>
@@ -132,4 +150,8 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+const mapStateToProps = state => ({
+  auth:state.userReducer
+})
+
+export default connect(mapStateToProps)(Dashboard);

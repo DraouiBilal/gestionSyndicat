@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Grid } from '@mui/material';
+import { Grid, Select } from '@mui/material';
 import {InputLabel} from '@mui/material';
 import {TextField} from '@mui/material';
 import Box from '@mui/material/Box';
@@ -10,6 +10,12 @@ import Modal from '@mui/material/Modal';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { GridActionsCellItem } from '@mui/x-data-grid';
+import { connect } from 'react-redux';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import axios from 'axios';
+import makeAnimated from 'react-select/animated';
+
 
 const style = {
   position: 'absolute',
@@ -24,13 +30,34 @@ const style = {
   p: 4,
 };
 
-const AddBasicModal = ({open,handleClose}) => {
+const config = {
+  headers: {
+    "Content-Type": "application/json",
+  },
+};
+
+const AddBasicModal = ({rows,setDepenses,user,open,handleClose}) => {
+
+  const [formData, setFormData] = useState({
+    "date_de_depense":"",
+    "somme":0,
+    "intitule":"",
+    "syndicate_id":user.id,
+    "type_de_paiement":"cheque"
+  })
+
+  const handleOnChange = e => {
+    setFormData({...formData, [e.target.name]: e.target.value})
+  }
 
   const handleSubmit = (e) =>{
-    e.preventDefault(); 
-    //contains inputs and some garbage
-    console.log(e.target)
-    //Axios bs to be added
+    e.preventDefault();
+    
+    axios.post('/depense/create',formData,config).then(res=>{
+      setDepenses([...rows,res.data.depense])
+    }).catch(e=>{
+      console.log(e);
+    })
   }
 
   return (
@@ -63,6 +90,17 @@ const AddBasicModal = ({open,handleClose}) => {
                         mb:3,
                         width:'100%',
                         }}>
+                <Grid item xs={12}>
+                    <InputLabel sx={{ fontSize:"14px"}}>Type de paiement</InputLabel>
+                    <Select 
+                        name='proprietaire_cin'
+                        id='proprietaire_id'
+                        options={[{value:"cheque",label:"cheque"},{value:"liquide",label:"liquide"}]}
+                        isMulti="false"
+
+
+                    />
+                </Grid>
                 <Grid item xs={6}>
                     <InputLabel sx={{ fontSize:"14px"}}>Date de l'operation</InputLabel>
                     <TextField
@@ -70,22 +108,26 @@ const AddBasicModal = ({open,handleClose}) => {
                         fullWidth
                         size="small"
                         id="date"
-                        name="date"
+                        name="date_de_depense"
                         type="date"
                         placeholder="date"
+                        onChange={e=>handleOnChange(e)}
+                        value={formData.date_de_depense}
                         required
                     /> 
                 </Grid>
                 <Grid item xs={6}>
-                    <InputLabel sx={{ fontSize:"14px"}}>Montant</InputLabel>
+                    <InputLabel sx={{ fontSize:"14px"}}>Somme</InputLabel>
                     <TextField
                         sx={{ fontSize:"14px"}}
                         size="small"
                         fullWidth
                         id="montant"
-                        name="montant"
+                        name="somme"
                         type="number"
                         placeholder="Montant"
+                        onChange={e=>handleOnChange(e)}
+                        value={formData.somme}
                         required
                     />
                 </Grid>
@@ -100,6 +142,8 @@ const AddBasicModal = ({open,handleClose}) => {
                         name="intitule"
                         type="text"
                         placeholder="Intitulé"
+                        onChange={e=>handleOnChange(e)}
+                        value={formData.intitule}
                         required
                     />
                 </Grid>
@@ -118,13 +162,35 @@ const AddBasicModal = ({open,handleClose}) => {
   );
 }
 
-const EditBasicModal = ({open,handleClose,row}) => {
+const EditBasicModal = ({rows,setDepenses,user,open,handleClose,row}) => {
+
+  const [formData, setFormData] = useState({
+    "date_de_depense":"",
+    "somme":0,
+    "intitule":"",
+    "syndicate_id":user.id,
+    "type_de_paiement":"cheque"
+  })
+
+  const handleOnChange = e => {
+    setFormData({...formData, [e.target.name]: e.target.value})
+  }
 
   const handleSubmit = (e) =>{
-    e.preventDefault(); 
-    //again contains data and garbage
-    console.log(e)
-    //axios shit to be added 
+    e.preventDefault();
+    
+    axios.put('/depense/update',{...formData,id:row.id},config).then(res=>{
+      console.log(res);
+      setDepenses(rows.map(r=>{
+        if(r.id===row.id){
+          return res.data.depense
+        }
+        else 
+          return r
+      }))
+    }).catch(e=>{
+      console.log(e);
+    })
   }
 
   return (
@@ -137,7 +203,7 @@ const EditBasicModal = ({open,handleClose,row}) => {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Ajouter une dépense :
+            Modifier une dépense :
           </Typography>
           <Grid container spacing={2} 
                     component="form" 
@@ -157,6 +223,18 @@ const EditBasicModal = ({open,handleClose,row}) => {
                         mb:3,
                         width:'100%',
                         }}>
+
+                <Grid item xs={12}>
+                    <InputLabel sx={{ fontSize:"14px"}}>Type de paiement</InputLabel>
+                    <Select 
+                        name='proprietaire_cin'
+                        id='proprietaire_id'
+                        options={[{value:"cheque",label:"cheque"},{value:"liquide",label:"liquide"}]}
+                        isMulti="false"
+
+
+                    />
+                </Grid>
                 <Grid item xs={6}>
                     <InputLabel sx={{ fontSize:"14px"}}>Date de l'operation</InputLabel>
                     <TextField
@@ -164,24 +242,28 @@ const EditBasicModal = ({open,handleClose,row}) => {
                         fullWidth
                         size="small"
                         id="date"
-                        name="date"
+                        name="date_de_depense"
                         type="date"
-                        defaultValue={row.date_operation}
+                        defaultValue={row.date_de_depense}
                         placeholder="date"
+                        onChange={e=>handleOnChange(e)}
+                        value={formData.date_de_depense}
                         required
                     /> 
                 </Grid>
                 <Grid item xs={6}>
-                    <InputLabel sx={{ fontSize:"14px"}}>Montant</InputLabel>
+                    <InputLabel sx={{ fontSize:"14px"}}>Somme</InputLabel>
                     <TextField
                         sx={{ fontSize:"14px"}}
                         size="small"
                         fullWidth
                         id="montant"
-                        name="montant"
+                        name="somme"
                         type="number"
-                        defaultValue={row.montant}
-                        placeholder="Montant"
+                        defaultValue={row.somme}
+                        placeholder="Somme"
+                        onChange={e=>handleOnChange(e)}
+                        value={formData.somme}
                         required
                     />
                 </Grid>
@@ -197,6 +279,8 @@ const EditBasicModal = ({open,handleClose,row}) => {
                         type="text"
                         defaultValue={row.intitule}
                         placeholder="Intitulé"
+                        onChange={e=>handleOnChange(e)}
+                        value={formData.intitule}
                         required
                     />
                 </Grid>
@@ -206,7 +290,7 @@ const EditBasicModal = ({open,handleClose,row}) => {
                         variant='contained' 
                         color='error' 
                         sx={{height:'30px',marginLeft:2,mt:2}}
-                    >Add</Button>
+                    >Update</Button>
                 </Box>
             </Grid>
         </Box>
@@ -215,46 +299,80 @@ const EditBasicModal = ({open,handleClose,row}) => {
   );
 }
 
+const CRUD = ({auth:{user,loading:userLoading}}) => {
 
-export default function CRUD() {
+  const [rows, setDepense] = useState([])
+  const [loading, setLoading] = useState(true)
+  
+  useEffect(()=>{
+    if(user){
+      axios.get('/depense').then(res=> {
+        setDepense(res.data.depenses)
+        setLoading(false)
+      }).catch(err=>{
+        console.log(err);
+      })
+      if(user.role==='syndicate'){
+        setColumns([
+          { field: 'id', headerName: 'ID', width: 70 },
+          { field: 'date_de_depense', headerName: 'Date d\'oprartion', width: 220 },
+          {
+              field: 'intitule',
+              headerName: 'Intitulé',
+              sortable: false,
+              width: 300,
+          },{
+              field: 'somme',
+              headerName: 'Somme',
+              type: 'number',
+              width: 130,
+          },
+          { field: 'type_de_paiement', headerName: 'Type de paiement', width: 150 },
+          
+          {
+            field: 'action',
+            headerName: 'Action',
+            width: 100,
+            type: 'actions',
+            getActions: (params)=>[
+              <GridActionsCellItem icon={<DeleteIcon sx={{color:"red",fontSize:"20px"}}/>} onClick={()=>{handleDelete(params.row.id);}} />,
+              <GridActionsCellItem icon={<EditIcon sx={{color:"yellow",fontSize:"20px"}}/>} onClick={()=>{handleOpenEdit(params.row)}} />
+              ]
+          },
+      ])
+      }
+      else{
+        setColumns([
+          { field: 'id', headerName: 'ID', width: 70 },
+          { field: 'date_de_depense', headerName: 'Date d\'oprartion', width: 220 },
+          {
+              field: 'intitule',
+              headerName: 'Intitulé',
+              sortable: false,
+              width: 300,
+          },{
+              field: 'somme',
+              headerName: 'Somme',
+              type: 'number',
+              width: 130,
+          },
+          { field: 'type_de_paiement', headerName: 'Type de paiement', width: 150 },
+        
+      ])
+      }
+    }
+    },[user])
 
     //table columns structure
-    const columns = [
-        { field: 'id', headerName: 'ID', width: 70 },
-        { field: 'id_propriete', headerName: 'id propriete', width: 180 },
-        { field: 'date_operation', headerName: 'Date d\'oprartion', width: 220 },
-        {
-            field: 'intitule',
-            headerName: 'Intitulé',
-            sortable: false,
-            width: 300,
-        },{
-            field: 'montant',
-            headerName: 'Montant',
-            type: 'number',
-            width: 130,
-        },{
-          field: 'action',
-          headerName: 'Action',
-          width: 100,
-          type: 'actions',
-          getActions: (params)=>[
-            <GridActionsCellItem icon={<DeleteIcon sx={{color:"red",fontSize:"20px"}}/>} onClick={()=>{handleDelete(params.row.id_propriete);}} />,
-            <GridActionsCellItem icon={<EditIcon sx={{color:"yellow",fontSize:"20px"}}/>} onClick={()=>{handleOpenEdit(params.row)}} />
-            ]
-        },
-    ];
+    const [columns,setColumns] = useState([])
 
 
     // the way rows should look like after getting them with a useEffect i guess
-    const rows = [
-      { id: 1, id_propriete: '9798798', date_operation: '20-11-2000', montant: 35, intitule:'Intitu'},
-      { id: 2, id_propriete: '7897984', date_operation: '21-11-2000', montant: 35, intitule:'Intitu'},
-    ];
 
-    const handleDelete = (numero) =>{
-      console.log(numero)
-      //axios bs to added
+
+    const handleDelete = async (numero) =>{
+      await axios.post('/depense/delete/',{id:numero},config)
+      setDepense(rows.filter(r=>r.id!==numero))
     }
 
 
@@ -270,14 +388,14 @@ export default function CRUD() {
         //current row being edited
     const [row,setRow] = React.useState({});
 
-    return (
+    return (!loading && !userLoading &&
       <div>
-        <Button sx={{ fontSize : "14px", backgroundColor:"#E2E2E2", color:"black", fontWeight:"600", boxShadow:"2px 2px 5px"}} variant="contained" onClick={handleOpenAdd}> Add </Button>
-      
+        {user!==null && user.role==='syndicate' &&<Button sx={{ fontSize : "14px", backgroundColor:"#E2E2E2", color:"black", fontWeight:"600", boxShadow:"2px 2px 5px"}} variant="contained" onClick={handleOpenAdd}> Add </Button>
+      }
         <div className="crud-table-container">
-            <AddBasicModal open={openAdd} handleClose={handleCloseAdd} />
-            <EditBasicModal open={openEdit} handleClose={handleCloseEdit} row={row} />
-            <DataGrid
+            {user!==null && user.role==='syndicate' && <><AddBasicModal rows={rows} user={user} setDepenses={setDepense} open={openAdd} handleClose={handleCloseAdd} />
+            <EditBasicModal rows={rows} user={user} setDepenses={setDepense} open={openEdit} handleClose={handleCloseEdit} row={row} />
+            </>}<DataGrid
                 sx={{
                   color : "#E2E2E2",
                   backgroundColor:"#313131",
@@ -293,3 +411,10 @@ export default function CRUD() {
       </div>
     );
 }
+
+const mapStateToProps = state => ({
+  auth: state.userReducer
+})
+
+
+export default connect(mapStateToProps)(CRUD);
